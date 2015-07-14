@@ -14,13 +14,20 @@
  */
 package com.lark.http;
 
+import java.io.UnsupportedEncodingException;
+
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.NetworkError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.TimeoutError;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.lark.http.json.GsonImpl;
 import com.lark.http.json.Json;
@@ -128,16 +135,30 @@ public class LarkHttp {
 		},new ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				if(mRequestCallback != null){
-					mRequestCallback.onError("Volley Error!",error);
+				StringBuilder errorMsg = new StringBuilder("Volley Internal Error:");
+				if(error instanceof ServerError){
+					int code = error.networkResponse.statusCode;
+					String msg = "remote server error";
+					errorMsg.append("HTTP Status ").append(code).append("/").append(msg);
+				}
+				else if(error instanceof NoConnectionError){
+					errorMsg.append("No network connection.");
+				}
+				else if(error instanceof NetworkError){
+					errorMsg.append("Network error.");
+				}
+				else if(error instanceof TimeoutError) {
+					errorMsg.append("Request timeout");
 				}
 				if(mBeforeReponseCallback != null){
-					mBeforeReponseCallback.onError("Volley Error!",error);
+					mBeforeReponseCallback.onError(errorMsg.toString(),error);
+				}
+				if(mRequestCallback != null){
+					mRequestCallback.onError(errorMsg.toString(),error);
 				}
 				else{
 					Log.v(TAG, "Not dealing volley error.Error:"+error.getMessage());
 				}
-				
 			}
 		});
 	}
@@ -173,7 +194,7 @@ public class LarkHttp {
 			}
 		} catch (JsonConvertFailException e) {
 			if(mRequestCallback != null){
-				mRequestCallback.onError("Http request success,but convert it to object failed!",e);
+				mRequestCallback.onError("Http request success,but convert it from json to object failed!",e);
 			}
 			e.printStackTrace();
 		}
@@ -219,7 +240,7 @@ public class LarkHttp {
 		/**
 		 * the error occur will be called
 		 * @param errorMsg
-		 * @param tr
+		 * @param tr volley exception
 		 */
 		public void onError(String errorMsg,Throwable tr);
 	}
