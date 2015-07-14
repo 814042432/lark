@@ -1,6 +1,6 @@
 ## Lark ##
 
-**Lark** is http library base on Google **Volley** open source project.It provides easy API for user.The library is not intrude into volley,so you can use volley feature as normal.
+**Lark** is a http library base on Google **Volley** open source project.It provides easy API for user.The library is not intrude into volley,so you can use volley feature as normal.
 
 ### Features ###
 
