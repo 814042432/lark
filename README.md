@@ -9,6 +9,7 @@
 - All request base on **LarkStringRequest** which treat every request as raw String.Also you can transfer the raw string to object if it json formated.Or you can intercept the raw response string deliver if you consume the result.
 - Provide **LarkImageLoaderUtil** to load image from network nuch more easy and effecient using LruCache.Before setting bitmap to you view,you can clip the bitmap with different sharp(e.g:round corner.The class **RoundCliper** do the this.).
 - Much more convenient to set header and post/patch/put parameters.
+
 ## Usage ##
 - Basic **Get** Request:
 
