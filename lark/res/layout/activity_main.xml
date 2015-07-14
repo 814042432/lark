@@ -6,23 +6,30 @@
 
     <Button
         android:id="@+id/btn_raw"
-        android:layout_width="100dp"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:text="Raw Str" />
 
     <Button
         android:id="@+id/btn_json"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/btn_raw"
         android:text="Json" />
     
       <Button
         android:id="@+id/btn_image"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/btn_json"
         android:text="Image" />
+      
+        <Button
+        android:id="@+id/btn_param"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/btn_image"
+        android:text="Param" />
 
     <ImageView
         android:id="@+id/iv_image"

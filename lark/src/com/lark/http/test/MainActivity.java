@@ -24,7 +24,7 @@ import com.lark.http.param.HttpParams;
 
 public class MainActivity extends Activity {
 	private TextView tv_show;
-	private Button btn_raw,btn_json,btn_image;
+	private Button btn_raw,btn_json,btn_image,btn_param;
 	private ImageView iv_show;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
 		btn_raw = (Button) findViewById(R.id.btn_raw);
 		btn_json = (Button) findViewById(R.id.btn_json);
 		btn_image = (Button) findViewById(R.id.btn_image);
+		btn_param = (Button) findViewById(R.id.btn_param);
 		iv_show = (ImageView) findViewById(R.id.iv_image);
 		btn_raw.setOnClickListener(new OnClickListener() {
 			
@@ -64,16 +65,8 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				tv_show.setText("");
 				String url = "http://testserver.coding.io/test";
-				PostAndHeaderData data = new PostAndHeaderData();
-				data.poststr1 = "Yang";
-				data.poststr2 = "Haibo";
-				data.headerstr1 = "Me";
-				
-				HttpParams p = new HttpParams();
-				p.setHttpParamModel(data);
 				
 				LarkHttp.build(getApplicationContext())
-				.setHttpParams(p)
 				.setBeforeReponseCallback(new BeforeReponseCallback() {
 					
 					@Override
@@ -132,10 +125,43 @@ public class MainActivity extends Activity {
 				.get(imageurl, iv_show, config);
 			}
 		});
+		
+		btn_param.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				tv_show.setText("");
+				String url = "http://testserver.coding.io/echo";
+				PostAndHeaderData data = new PostAndHeaderData();
+				data.poststr1 = "Yang";
+				data.poststr2 = "Haibo";
+				data.headerstr1 = "Me";
+				
+				HttpParams p = new HttpParams();
+				p.setHttpParamModel(data);
+				
+				LarkHttp.build(getApplicationContext())
+				.setHttpParams(p)
+				.setBeforeReponseCallback(new BeforeReponseCallback() {
+					
+					@Override
+					public boolean beforeReponse(String rawResponse) {
+						tv_show.setText(rawResponse);
+						return false;
+					}
+
+					@Override
+					public void onError(String errorMsg, Throwable tr) {
+						tv_show.setText("Error Occurs:["+errorMsg+":"+tr.getMessage()+"]");
+					}
+				})
+				.post(url);
+			}
+		});
 	}
 	
 	class Person{
-		//{"name":"YangHaibo","sex":"ÄÐ","age":27,"money":17.5,"list":[{"book":"C expert","price":90.0},{"book":"C#","price":90.0}]} 
+		//{"name":"YangHaibo","sex":"ÄÐ","age":23,"money":17.5,"list":[{"book":"C expert","price":90.0},{"book":"C#","price":90.0}]} 
 		public String name;
 		public String sex;
 		public int age;

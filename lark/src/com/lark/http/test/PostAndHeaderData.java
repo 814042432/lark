@@ -20,6 +20,6 @@ public class PostAndHeaderData extends HttpParamModel<PostAndHeaderData> {
 	@Param(type=HttpParams.Type.TYPE_POST,key="p2")
 	public String poststr2;
 	
-	@Param(type=HttpParams.Type.TYPE_POST,key="h1")
+	@Param(type=HttpParams.Type.TYPE_HEADER,key="h1")
 	public String headerstr1;
 }
