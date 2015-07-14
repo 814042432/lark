@@ -14,20 +14,17 @@
  */
 package com.lark.http;
 
-import java.io.UnsupportedEncodingException;
-
 import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.NetworkError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.TimeoutError;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.lark.http.json.GsonImpl;
 import com.lark.http.json.Json;
@@ -99,9 +96,26 @@ public class LarkHttp {
 	public Request getRequest(){
 		return mLarkStringRequest;
 	}
-	
 	/**
-	 * get request
+	 * http delete request,body params will be discard
+	 * @param url
+	 */
+	public void head(final String url){
+		this.mUrl = url;
+		this.mRequestMethod = Request.Method.HEAD;
+		sendRequest();
+	}
+	/**
+	 * http delete request,body params will be discard.
+	 * @param url
+	 */
+	public void delete(final String url){
+		this.mUrl = url;
+		this.mRequestMethod = Request.Method.DELETE;
+		sendRequest();
+	}
+	/**
+	 * http get request,body params will be discard
 	 * @param url
 	 */
 	public void get(final String url){
@@ -109,10 +123,31 @@ public class LarkHttp {
 		this.mRequestMethod = Request.Method.GET;
 		sendRequest();
 	}
-	
+	/**
+	 * http post request,accept body params.
+	 * @param url
+	 */
 	public void post(final String url){
 		this.mUrl = url;
 		this.mRequestMethod = Request.Method.POST;
+		sendRequest();
+	}
+	/**
+	 * http patch request,accept body params.
+	 * @param url
+	 */
+	public void patch(final String url){
+		this.mUrl = url;
+		this.mRequestMethod = Request.Method.PATCH;
+		sendRequest();
+	}
+	/**
+	 * http put request,accept body params.
+	 * @param url
+	 */
+	public void put(final String url){
+		this.mUrl = url;
+		this.mRequestMethod = Request.Method.PUT;
 		sendRequest();
 	}
 	
