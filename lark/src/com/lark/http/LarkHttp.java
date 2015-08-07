@@ -196,6 +196,7 @@ public class LarkHttp {
 				}
 			}
 		});
+		mLarkStringRequest.setRetryPolicy(new LarkRetryPolicy());
 	}
 	
 	private void sendRequest(){

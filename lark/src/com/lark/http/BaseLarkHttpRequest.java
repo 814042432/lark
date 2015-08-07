@@ -20,6 +20,7 @@ import android.text.TextUtils;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RetryPolicy;
 import com.android.volley.Response.ErrorListener;
 import com.lark.http.param.HttpParams;
 
@@ -56,5 +57,4 @@ public abstract class BaseLarkHttpRequest<T> extends Request<T> {
 		}
 		return super.getHeaders();
 	}
-
 }
